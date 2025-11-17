@@ -1,0 +1,20 @@
+@startuml
+title 5G PDU Session Establishment
+
+participant UE
+participant gNB
+participant AMF
+participant SMF
+participant UPF
+
+UE -> gNB: PDU Session Establishment Request (NAS)
+gNB -> AMF: Initial UE Message
+
+AMF -> SMF: Create SM Context (Nsmf_SM)
+SMF -> UPF: PFCP Session Establishment
+UPF -> SMF: PFCP Session Response
+
+AMF -> gNB: PDU Session Accept (NGAP)
+gNB -> UE: RRC Reconfiguration (DRB Setup)
+
+@enduml

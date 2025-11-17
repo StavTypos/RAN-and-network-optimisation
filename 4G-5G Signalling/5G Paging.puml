@@ -1,0 +1,11 @@
+@startuml
+title 5G Paging
+
+participant AMF
+participant gNB
+participant UE
+
+AMF -> gNB: NGAP Paging
+gNB -> UE: RRC Paging
+
+@enduml

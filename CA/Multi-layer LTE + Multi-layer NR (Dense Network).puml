@@ -1,0 +1,24 @@
+@startuml
+title Multi-layer LTE + Multi-layer NR (Dense Network)
+
+actor UE
+participant LTE as "eNB (Macro)"
+participant NR1 as "gNB1 (Mid-Band)"
+participant NR2 as "gNB2 (mmWave)"
+
+UE -> LTE: RRC Connection Setup
+LTE -> NR1: EN-DC Addition Request
+NR1 -> LTE: EN-DC Addition Request Ack
+LTE -> UE: RRC Reconfiguration (Add NR1)
+UE -> NR1: RRC Connection Setup
+UE -> LTE: RRC Reconfiguration Complete
+LTE -> NR1: Data Split Activated
+alt NR2 triggered
+    LTE -> NR2: EN-DC Addition Request
+    NR2 -> LTE: Ack
+    LTE -> UE: RRC Reconfiguration (Add NR2)
+    UE -> NR2: RRC Connection Setup
+    UE -> LTE: RRC Reconfiguration Complete
+    LTE -> NR2: Data Split Activated
+end
+@enduml
