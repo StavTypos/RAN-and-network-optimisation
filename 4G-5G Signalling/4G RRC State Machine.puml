@@ -1,0 +1,8 @@
+@startuml
+title 4G RRC State Machine
+
+[*] --> IDLE
+IDLE --> CONNECTED: RRC Connection Setup
+CONNECTED --> IDLE: RRC Release (Inactivity Timer)
+
+@enduml

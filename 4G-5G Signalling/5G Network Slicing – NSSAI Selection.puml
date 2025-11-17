@@ -1,0 +1,21 @@
+@startuml
+title 5G Network Slicing – NSSAI Selection
+
+participant UE
+participant gNB
+participant AMF
+participant NSSF
+participant SMF
+
+UE -> gNB: Registration Request (NSSAI)
+gNB -> AMF: Initial UE Message
+
+AMF -> NSSF: Slice Selection Request
+NSSF -> AMF: Slice Selection Response
+
+AMF -> SMF: SMF Selection Request
+SMF -> AMF: SMF Selection Response
+
+UE -> AMF: PDU Session Establishment Request
+
+@enduml

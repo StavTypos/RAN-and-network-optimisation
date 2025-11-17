@@ -1,0 +1,17 @@
+@startuml
+participant UE
+participant eNB as "eNodeB"
+
+UE -> eNB: RRC Connection Setup Request
+eNB -> UE: RRC Connection Setup
+UE -> eNB: RRC Connection Setup Complete
+note over UE,eNB: Radio conditions degrade -> RLF
+UE -> eNB: RRC Re-establishment Request
+alt Re-establishment success
+  eNB -> UE: RRC Re-establishment
+else Fail (RLF loops)
+  eNB -> UE: RRC Re-establishment Reject
+  UE -> MME: Implicitly triggers TAU/Attach retry
+  note right: Causes: PRACH mismatch, interference,\nwrong timers, handover failures
+end
+@enduml

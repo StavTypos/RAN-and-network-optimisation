@@ -1,0 +1,29 @@
+@startuml
+start
+:High PRB Load Observed;
+
+:Check MCS (DL/UL);
+
+if (MCS Low?) then (Yes)
+  :Low SINR / RF interference;\nMitigate interference;
+  stop
+else (No)
+endif
+
+:Check MIMO Layers Used;
+
+if (Layers < Supported?) then (Yes)
+  :Beamforming or antenna config\nissues;\nInvestigate hardware/tilt/PCI;
+else (No)
+endif
+
+:Check HARQ / BLER;
+
+if (High BLER?) then (Yes)
+  :Fix UL/DL RF conditions\n(pwr, tilt, interference);
+else (No)
+  :Performance OK but\ncapacity limited;
+endif
+
+stop
+@enduml

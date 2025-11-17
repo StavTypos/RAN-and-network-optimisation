@@ -1,0 +1,18 @@
+@startuml
+title LTE Macro + NR mmWave Small Cell
+actor UE
+participant LTE as "eNB (Macro)"
+participant NR as "gNB (mmWave SCell)"
+
+UE -> LTE: RRC Connection Setup
+LTE -> NR: EN-DC Addition Request (Xn)
+NR -> LTE: EN-DC Addition Request Ack
+LTE -> UE: RRC Reconfiguration (Add NR)
+alt NR RSRP/SINR sufficient
+    UE -> NR: RRC Connection Setup
+    UE -> LTE: RRC Reconfiguration Complete
+    LTE -> NR: Data Split Activated
+else NR weak
+    LTE -> UE: No NR added (Fallback to LTE-only)
+end
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+start
+:High PRB Load Detected;
+
+:Check Traffic Volume;
+if (Is Traffic Abnormally\nHigh?) then (Yes)
+  :Investigate traffic spikes,\nevents, time-of-day patterns;
+  stop
+else (No)
+endif
+
+:Check SINR / CQI / Interference;
+
+if (Is SINR / CQI Low?) then (Yes)
+  :Interference Mitigation:\n- Tilt/Power Optimization\n- PCI Cleanup\n- TDD Pattern Alignment\n- Coverage Fixes;
+  stop
+else (No)
+endif
+
+:Check Scheduling Efficiency\n(MCS, BLER, HARQ);
+
+if (Is BLER / HARQ High?) then (Yes)
+  :Fix RF Issues:\n- Coverage\n- UL Power\n- Interference;
+  stop
+else (No)
+endif
+
+:Check Traffic Distribution\n(Neighbor cell loads);
+
+if (Load Can Be Balanced\nto Neighbors?) then (Yes)
+  :Tune HO/MLB:\n- CIO\n- A3/A5 Offsets\n- Add Missing Neighbors;
+  stop
+else (No)
+endif
+
+:Evaluate Capacity Options:\nCA, new carriers, MIMO, small cells;
+stop
+@enduml
