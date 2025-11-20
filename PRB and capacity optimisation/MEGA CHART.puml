@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 skinparam backgroundColor #FFFFFF
 
@@ -89,3 +90,96 @@ endif
 
 stop
 @enduml
+=======
+@startuml
+skinparam backgroundColor #FFFFFF
+
+'------------- SWIMLANES -----------------
+|Traffic & Mobility|
+start
+:High PRB Load Detected;
+#palegreen:Check Traffic Volume (PDCP throughput);
+
+if (Traffic Abnormally High?) then (Yes)
+  #lightgreen:Traffic-driven load;\nInvestigate spikes, events,\ntime-of-day patterns;
+  stop
+else (No)
+endif
+
+|RF|
+#lightblue:Check RF Quality (SINR, CQI, RSSI);
+
+if (Low SINR / High Interference?) then (Yes)
+  #skyblue:RF Issue:\n- PCI Conflicts\n- Overshoot\n- Tilt/Power issue\n- TDD Pattern Mismatch;
+  #skyblue:Apply interference mitigation;
+  stop
+else (No)
+endif
+
+|Scheduler|
+#ffa64d:Check Scheduling Efficiency\n(MCS, BLER, HARQ);
+
+if (High BLER or HARQ?) then (Yes)
+  #ffcc80:Fix RF / UL issues:\n- UL Power Control\n- Reduce UL interference\n- Improve coverage;
+  stop
+else (No)
+endif
+
+#ffbb66:Check MIMO Layers vs Supported;
+
+if (Layers Under-Utilised?) then (Yes)
+  #ff9933:Beam/Antenna Issue:\n- Beam alignment\n- Wrong tilt\n- PCI impact on beams;
+  stop
+else (No)
+endif
+
+
+|Traffic & Mobility|
+#ccffcc:Check Neighbor Cell Load;
+
+if (Neighbors Underloaded?) then (Yes)
+  #99ff99:Apply MLB / Mobility Tuning:\n- A3/A5 offsets\n- CIO adjustments\n- Add missing neighbors;
+  stop
+else (No)
+endif
+
+#b3ffb3:Check Coverage Overlap / Overshooting;
+
+if (Overshooting Present?) then (Yes)
+  #99ff99:Reduce overshoot:\n- Adjust tilt\n- Reduce cell power;
+else (No)
+endif
+
+
+|Capacity|
+#e6ccff:Check Traffic vs PRB Usage;
+
+if (High Traffic + High PRBs?) then (Capacity)
+  #d1b3ff:TRUE CAPACITY BOTTLENECK;
+else (Quality)
+  stop
+endif
+
+#cc99ff:Check CA / New Carriers / MIMO / Small Cells;
+
+if (CA Available?) then (Enable)
+  #cc66ff:Enable Carrier Aggregation;
+endif
+
+if (Spectrum Available?) then (Add)
+  #cc66ff:Add LTE/NR Carrier;
+endif
+
+if (MIMO Upgrade Possible?) then (Upgrade)
+  #cc66ff:Upgrade MIMO layers (2x2→4x4→8x8);
+endif
+
+if (Small Cells / Sector Split?) then (Yes)
+  #cc66ff:Deploy Pico/Micro cells\nor split sectors;
+endif
+
+#cc66ff:Capacity Upgrades Completed;
+
+stop
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

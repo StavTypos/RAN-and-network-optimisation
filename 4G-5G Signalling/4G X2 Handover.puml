@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 title 4G X2 Handover
 
@@ -18,3 +19,25 @@ Target_eNB -> MME: Path Switch Request
 MME -> Target_eNB: Path Switch Ack
 
 @enduml
+=======
+@startuml
+title 4G X2 Handover
+
+participant UE
+participant Source_eNB
+participant Target_eNB
+participant MME
+
+UE -> Source_eNB: Measurement Report
+Source_eNB -> Target_eNB: X2 HO Request
+Target_eNB -> Source_eNB: X2 HO Request Ack
+
+Source_eNB -> UE: RRC Handover Command
+
+UE -> Target_eNB: RRC HO Complete
+
+Target_eNB -> MME: Path Switch Request
+MME -> Target_eNB: Path Switch Ack
+
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

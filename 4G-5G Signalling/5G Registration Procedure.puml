@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 title 5G Registration Procedure
 
@@ -23,3 +24,30 @@ UE -> AMF: Security Mode Complete
 
 AMF -> UE: Registration Accept
 @enduml
+=======
+@startuml
+title 5G Registration Procedure
+
+participant UE
+participant gNB
+participant AMF
+participant AUSF
+participant UDM
+
+UE -> gNB: RRC Setup Request
+gNB -> UE: RRC Setup Complete
+
+UE -> gNB: Registration Request (SUCI)
+gNB -> AMF: Initial UE Message
+
+AMF -> AUSF: Authentication Request
+AUSF -> UDM: Authentication Data Request
+UDM -> AUSF: Authentication Data Response
+AUSF -> AMF: Authentication Response
+
+AMF -> UE: Security Mode Command
+UE -> AMF: Security Mode Complete
+
+AMF -> UE: Registration Accept
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

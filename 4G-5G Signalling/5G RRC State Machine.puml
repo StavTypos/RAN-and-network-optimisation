@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 title 5G RRC State Machine
 
@@ -11,3 +12,18 @@ CONNECTED --> IDLE: RRC Release
 INACTIVE --> IDLE: RRC Release
 
 @enduml
+=======
+@startuml
+title 5G RRC State Machine
+
+[*] --> IDLE
+IDLE --> CONNECTED: RRC Setup
+
+CONNECTED --> INACTIVE: RRC Suspend
+INACTIVE --> CONNECTED: RRC Resume
+
+CONNECTED --> IDLE: RRC Release
+INACTIVE --> IDLE: RRC Release
+
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

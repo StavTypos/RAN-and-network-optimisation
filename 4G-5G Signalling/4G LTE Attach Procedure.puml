@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml 4G LTE Attach Procedure
 
 title 4G LTE Attach Procedure
@@ -33,3 +34,40 @@ eNB -> UE: Attach Accept
 UE -> MME: Attach Complete
 
 @enduml
+=======
+@startuml 4G LTE Attach Procedure
+
+title 4G LTE Attach Procedure
+
+participant UE
+participant eNB
+participant MME
+participant HSS
+
+UE -> eNB: RRC Connection Request
+eNB -> UE: RRC Connection Setup
+
+UE -> eNB: Attach Request (NAS)
+eNB -> MME: Initial UE Message (Attach Req)
+
+MME -> HSS: Authentication Info Request
+HSS -> MME: Authentication Info Response
+
+MME -> UE: Security Mode Command
+UE -> MME: Security Mode Complete
+
+MME -> eNB: Initial Context Setup Request
+eNB -> UE: RRC Reconfiguration
+
+MME -> SGW: Create Session Request
+SGW -> PGW: Create Session Request
+PGW -> SGW: Create Session Response
+SGW -> MME: Create Session Response
+
+MME -> eNB: Attach Accept
+eNB -> UE: Attach Accept
+
+UE -> MME: Attach Complete
+
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

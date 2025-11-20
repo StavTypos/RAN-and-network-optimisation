@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ' ============================================================
 ' 4G – Attach / TAU / Service Request Failure
 ' ============================================================
@@ -200,3 +201,207 @@ Footnotes:
 * Common causes: coverage gaps, DRX misalignment, paging overload
 end
 @enduml
+=======
+' ============================================================
+' 4G – Attach / TAU / Service Request Failure
+' ============================================================
+@startuml
+title 4G – Attach / TAU / Service Request Failure
+
+participant UE
+participant eNB as "eNodeB"
+participant MME
+participant HSS as "HSS/DB"
+
+[1] UE -> eNB: <color:blue>RRC Connection Request</color>
+[2] eNB -> MME: <color:orange>S1AP Initial UE Message (Attach/TAU)</color>
+[3] MME -> HSS: <color:green>Update Location / Auth Info</color>
+[4] HSS --> MME: <color:green>Auth vectors / subscriber data</color>
+[5] MME -> UE: <color:green>Authentication Request (via eNB)</color>
+[6] UE --> MME: <color:green>Authentication Response</color>
+
+alt Success
+  [7] MME -> SGW: <color:orange>Create Session Request</color>
+  [8] SGW -> PGW: <color:orange>Create Default Bearer</color>
+  [9] MME -> UE: <color:blue>Attach Accept (via eNB)</color>
+else Failure
+  [7] MME --> eNB: <color:red>S1AP Failure / Context Setup Failure</color>
+  [8] eNB -> UE: <color:red>RRC Release / Attach Reject</color>
+end
+
+note bottom
+Footnotes:
+* MME cause codes: e.g., 19 – No suitable cells, 21 – TA not allowed
+* Common causes: MME overload, S1AP IE mismatch, Tracking Area misconfig
+end
+@enduml
+
+
+' ============================================================
+' 4G – RRC Connection Failure / RLF
+' ============================================================
+@startuml
+title 4G – RRC Connection Failure / RLF / Re-establishment Loop
+
+participant UE
+participant eNB as "eNodeB"
+
+[1] UE -> eNB: <color:blue>RRC Connection Setup Request</color>
+[2] eNB -> UE: <color:blue>RRC Connection Setup</color>
+[3] UE -> eNB: <color:blue>RRC Connection Setup Complete</color>
+
+note over UE,eNB: Radio link fails (RLF)
+
+[4] UE -> eNB: <color:blue>RRC Re-establishment Request</color>
+
+alt Re-establishment success
+  [5] eNB -> UE: <color:blue>RRC Re-establishment</color>
+else Failure
+  [5] eNB -> UE: <color:red>RRC Re-establishment Reject</color>
+  [6] UE -> MME: <color:green>Triggers TAU / Attach retry</color>
+end
+
+note bottom
+Footnotes:
+* Cause codes: RRC setup failures often appear as cause 2 (Radio link failure)
+* Common causes: interference, PRACH mismatch, wrong timers
+end
+@enduml
+
+
+' ============================================================
+' 4G – S1AP Errors (Setup / Context Setup / Path Switch)
+' ============================================================
+@startuml
+title 4G – S1AP Errors (S1 Setup / Context Setup / Path Switch)
+
+participant eNB as "eNodeB"
+participant MME
+participant SGW
+
+[1] eNB -> MME: <color:orange>S1 Setup Request</color>
+alt S1 Setup Success
+  [2] MME -> eNB: <color:orange>S1 Setup Response</color>
+else Failure
+  [2] MME --> eNB: <color:red>S1 Setup Failure</color>
+end
+
+== Context / Path Switch ==
+[3] eNB -> MME: <color:orange>Initial Context Setup Request</color>
+[4] MME -> SGW: <color:orange>Modify Bearer / Path Switch Request</color>
+
+alt Success
+  [5] SGW --> MME: <color:orange>Modify Bearer Response</color>
+  [6] MME -> eNB: <color:orange>Initial Context Setup Response</color>
+else Failure
+  [5] SGW --> MME: <color:red>Error / timeout</color>
+  [6] MME --> eNB: <color:red>Context Setup Failure</color>
+end
+
+note bottom
+Footnotes:
+* Cause codes: 34 – No resources, 85 – S1AP undefined IE
+* Common causes: S1AP IE mismatch, overload, transport issues
+end
+@enduml
+
+
+' ============================================================
+' 4G – Handover Failure (X2 / S1)
+' ============================================================
+@startuml
+title 4G – Handover Failure (X2 / S1)
+
+participant UE
+participant src_eNB as "Source eNodeB"
+participant tgt_eNB as "Target eNodeB"
+participant MME
+
+[1] src_eNB -> tgt_eNB: <color:orange>X2 Handover Request</color>
+[2] tgt_eNB -> src_eNB: <color:orange>X2 Handover Request Ack</color>
+[3] src_eNB -> UE: <color:blue>RRC Reconfiguration (HO Command)</color>
+[4] UE -> tgt_eNB: <color:blue>RRC Reconfiguration Complete</color>
+[5] tgt_eNB -> MME: <color:orange>Path Switch Request</color>
+
+alt Success
+  [6] MME -> SGW: <color:orange>Update Bearer</color>
+  [7] SGW --> MME: <color:orange>Update Bearer Response</color>
+  [8] MME -> tgt_eNB: <color:orange>Path Switch Ack</color>
+else Failure
+  [6] tgt_eNB -> src_eNB: <color:red>Handover Failure</color>
+  [7] src_eNB -> UE: <color:red>RRC Re-establish or Release</color>
+end
+
+note bottom
+Footnotes:
+* Cause codes: 11 – Handover failure, 21 – Target cell not allowed
+* Common causes: neighbor misconfig, measurement misalignment, timer issues
+end
+@enduml
+
+
+' ============================================================
+' 4G – EPS Bearer Establishment Failure
+' ============================================================
+@startuml
+title 4G – EPS Bearer Establishment Failure
+
+participant UE
+participant eNB as "eNodeB"
+participant MME
+participant SGW
+participant PGW
+participant PCRF
+
+[1] UE -> eNB: <color:blue>PDN Connectivity Request</color>
+[2] eNB -> MME: <color:green>Forward PDN Request</color>
+[3] MME -> SGW: <color:orange>Create Session Request</color>
+[4] SGW -> PGW: <color:orange>Create Session</color>
+[5] PGW -> PCRF: <color:green>Policy Request</color>
+
+alt Success
+  [6] PGW --> SGW: <color:orange>Session Created</color>
+  [7] SGW --> MME: <color:orange>Create Session Response</color>
+  [8] MME -> eNB: <color:blue>Activate Default Bearer</color>
+else Failure
+  [6] PGW --> SGW: <color:red>Reject (DNN/APN/Policy)</color>
+  [7] SGW --> MME: <color:red>Create Session Failure</color>
+  [8] MME -> eNB: <color:red>Attach / PDN Reject</color>
+end
+
+note bottom
+Footnotes:
+* Cause codes: 27 – Insufficient resources, 39 – APN not supported
+* Common causes: DNN mismatch, PCRF policy reject, QoS misconfig
+end
+@enduml
+
+
+' ============================================================
+' 4G – Paging Failure
+' ============================================================
+@startuml
+title 4G – Paging Failure
+
+participant MME
+participant eNB as "eNodeB"
+participant UE
+
+[1] MME -> eNB: <color:orange>Paging Request</color>
+[2] eNB -> UE: <color:blue>Paging Indication</color>
+
+alt UE reachable
+  [3] UE -> eNB: <color:blue>RRC Connection Request</color>
+  [4] eNB -> MME: <color:orange>Paging Response</color>
+else Fail
+  note right
+  <color:red>UE does not respond</color>
+end
+
+note bottom
+Footnotes:
+* Cause codes: 19 – No suitable cells, 21 – Tracking area mismatch
+* Common causes: coverage gaps, DRX misalignment, paging overload
+end
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

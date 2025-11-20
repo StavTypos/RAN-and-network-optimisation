@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ' ============================================================
 ' 1. 4G LTE Attach Procedure
 ' ============================================================
@@ -301,3 +302,308 @@ SMF -> AMF: SMF Selection Response
 UE -> AMF: PDU Session Establishment Request
 
 @enduml
+=======
+' ============================================================
+' 1. 4G LTE Attach Procedure
+' ============================================================
+@startuml
+title 4G LTE Attach Procedure
+
+participant UE
+participant eNB
+participant MME
+participant HSS
+
+UE -> eNB: RRC Connection Request
+eNB -> UE: RRC Connection Setup
+
+UE -> eNB: Attach Request (NAS)
+eNB -> MME: Initial UE Message (Attach Req)
+
+MME -> HSS: Authentication Info Request
+HSS -> MME: Authentication Info Response
+
+MME -> UE: Security Mode Command
+UE -> MME: Security Mode Complete
+
+MME -> eNB: Initial Context Setup Request
+eNB -> UE: RRC Reconfiguration
+
+MME -> SGW: Create Session Request
+SGW -> PGW: Create Session Request
+PGW -> SGW: Create Session Response
+SGW -> MME: Create Session Response
+
+MME -> eNB: Attach Accept
+eNB -> UE: Attach Accept
+
+UE -> MME: Attach Complete
+@enduml
+
+
+' ============================================================
+' 2. 5G Registration Procedure
+' ============================================================
+@startuml
+title 5G Registration Procedure
+
+participant UE
+participant gNB
+participant AMF
+participant AUSF
+participant UDM
+
+UE -> gNB: RRC Setup Request
+gNB -> UE: RRC Setup Complete
+
+UE -> gNB: Registration Request (SUCI)
+gNB -> AMF: Initial UE Message
+
+AMF -> AUSF: Authentication Request
+AUSF -> UDM: Auth Data Request
+UDM -> AUSF: Auth Data Response
+AUSF -> AMF: Authentication Response
+
+AMF -> UE: Security Mode Command
+UE -> AMF: Security Mode Complete
+
+AMF -> UE: Registration Accept
+@enduml
+
+
+' ============================================================
+' 3. 4G Default Bearer Setup
+' ============================================================
+@startuml
+title 4G Default Bearer Setup
+
+participant UE
+participant eNB
+participant MME
+participant SGW
+participant PGW
+
+UE -> eNB: Attach Request
+eNB -> MME: Initial UE Message
+
+MME -> SGW: Create Session Request
+SGW -> PGW: Create Session Request
+PGW -> SGW: Create Session Response
+SGW -> MME: Create Session Response
+
+MME -> eNB: Initial Context Setup Request
+eNB -> UE: RRC Reconfiguration (Bearer Setup)
+
+@enduml
+
+
+' ============================================================
+' 4. 5G PDU Session Establishment
+' ============================================================
+@startuml
+title 5G PDU Session Establishment
+
+participant UE
+participant gNB
+participant AMF
+participant SMF
+participant UPF
+
+UE -> gNB: PDU Session Establishment Request (NAS)
+gNB -> AMF: Initial UE Message
+
+AMF -> SMF: Create SM Context (Nsmf_SM)
+SMF -> UPF: PFCP Session Establishment
+UPF -> SMF: PFCP Session Response
+
+AMF -> gNB: PDU Session Accept (NGAP)
+gNB -> UE: RRC Reconfiguration (DRB Setup)
+
+@enduml
+
+
+' ============================================================
+' 5. 4G X2 Handover
+' ============================================================
+@startuml
+title 4G X2 Handover
+
+participant UE
+participant Source_eNB
+participant Target_eNB
+participant MME
+
+UE -> Source_eNB: Measurement Report
+Source_eNB -> Target_eNB: X2 HO Request
+Target_eNB -> Source_eNB: X2 HO Request Ack
+
+Source_eNB -> UE: RRC Handover Command
+
+UE -> Target_eNB: RRC HO Complete
+
+Target_eNB -> MME: Path Switch Request
+MME -> Target_eNB: Path Switch Ack
+
+@enduml
+
+
+' ============================================================
+' 6. 5G Xn Handover
+' ============================================================
+@startuml
+title 5G Xn Handover
+
+participant UE
+participant Source_gNB
+participant Target_gNB
+participant AMF
+
+UE -> Source_gNB: Measurement Report
+Source_gNB -> Target_gNB: Xn HO Request
+Target_gNB -> Source_gNB: Xn HO Ack
+
+Source_gNB -> UE: RRC Reconfiguration (HO Command)
+
+UE -> Target_gNB: RRC HO Complete
+
+Target_gNB -> AMF: Path Update Request
+AMF -> Target_gNB: Path Update Response
+
+@enduml
+
+
+' ============================================================
+' 7. 4G RRC State Machine
+' ============================================================
+@startuml
+title 4G RRC State Machine
+
+[*] --> IDLE
+IDLE --> CONNECTED: RRC Connection Setup
+CONNECTED --> IDLE: RRC Release (Inactivity Timer)
+
+@enduml
+
+
+' ============================================================
+' 8. 5G RRC State Machine
+' ============================================================
+@startuml
+title 5G RRC State Machine
+
+[*] --> IDLE
+IDLE --> CONNECTED: RRC Setup
+CONNECTED --> INACTIVE: RRC Suspend
+INACTIVE --> CONNECTED: RRC Resume
+CONNECTED --> IDLE: RRC Release
+INACTIVE --> IDLE: RRC Release
+
+@enduml
+
+
+' ============================================================
+' 9. 4G Paging
+' ============================================================
+@startuml
+title 4G Paging
+
+participant MME
+participant eNB
+participant UE
+
+MME -> eNB: Paging Request
+eNB -> UE: Paging (RRC)
+
+@enduml
+
+
+' ============================================================
+' 10. 5G Paging
+' ============================================================
+@startuml
+title 5G Paging
+
+participant AMF
+participant gNB
+participant UE
+
+AMF -> gNB: NGAP Paging
+gNB -> UE: RRC Paging
+
+@enduml
+
+
+' ============================================================
+' 11. 4G Authentication (EPS-AKA)
+' ============================================================
+@startuml
+title 4G EPS-AKA Authentication
+
+participant UE
+participant eNB
+participant MME
+participant HSS
+
+UE -> eNB: Attach Request
+eNB -> MME: Initial UE Message
+
+MME -> HSS: Auth Info Request
+HSS -> MME: Auth Info Response
+
+MME -> UE: Auth Request
+UE -> MME: Auth Response
+
+@enduml
+
+
+' ============================================================
+' 12. 5G Authentication (5G-AKA)
+' ============================================================
+@startuml
+title 5G Authentication (5G-AKA / EAP-AKA')
+
+participant UE
+participant gNB
+participant AMF
+participant AUSF
+participant UDM
+
+UE -> gNB: Registration Request (SUCI)
+gNB -> AMF: Initial UE Message
+
+AMF -> AUSF: Authentication Request
+AUSF -> UDM: Auth Data Request
+UDM -> AUSF: Auth Data Response
+AUSF -> AMF: Authentication Response
+
+AMF -> UE: Security Mode Command
+UE -> AMF: Security Mode Complete
+
+@enduml
+
+
+' ============================================================
+' 13. 5G Network Slice Selection
+' ============================================================
+@startuml
+title 5G Network Slicing – NSSAI Selection
+
+participant UE
+participant gNB
+participant AMF
+participant NSSF
+participant SMF
+
+UE -> gNB: Registration Request (NSSAI)
+gNB -> AMF: Initial UE Message
+
+AMF -> NSSF: Slice Selection Request
+NSSF -> AMF: Slice Selection Response
+
+AMF -> SMF: SMF Selection Request
+SMF -> AMF: SMF Selection Response
+
+UE -> AMF: PDU Session Establishment Request
+
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

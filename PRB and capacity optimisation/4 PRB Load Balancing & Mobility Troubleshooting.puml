@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 start
 :High PRB Utilisation;
@@ -21,3 +22,28 @@ endif
 
 stop
 @enduml
+=======
+@startuml
+start
+:High PRB Utilisation;
+
+:Check Neighbor Cells Load;
+
+if (Neighbors Underloaded?) then (Yes)
+  :Apply MLB / HO Optimization:\nCIO, A3/A5 offsets,\nAdd neighbors;
+  stop
+else (No)
+endif
+
+:Check Coverage / Overshooting;
+
+if (Overshooting Present?) then (Yes)
+  :Fix via Tilt/Power,\nAdd NBs / reduce footprint;
+else (No)
+endif
+
+:Evaluate additional\ncapacity layers;
+
+stop
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60

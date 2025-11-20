@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 start
 :High PRB Load Condition;
@@ -26,3 +27,33 @@ endif
 
 stop
 @enduml
+=======
+@startuml
+start
+:High PRB Load Condition;
+
+:Check PDCP Throughput\nvs PRB Usage;
+
+if (High Traffic + High PRBs?) then (Yes)
+  :True Capacity Limit:\nAdd carriers / CA / MIMO;
+  stop
+else (No)
+endif
+
+if (Low TP + High PRBs?) then (Yes)
+  :Possible poor RF quality or\nScheduler inefficiency;
+else (No)
+  stop
+endif
+
+:Check SINR / CQI / BLER;
+
+if (Low SINR or High BLER?) then (Yes)
+  :Fix Interference / Coverage\n(tilt, PCI, power);
+else (No)
+  :Check MIMO Layers / Beam issues;
+endif
+
+stop
+@enduml
+>>>>>>> 915b3e0a9fa8e3264edbc810d1662e46b2e2bc60
