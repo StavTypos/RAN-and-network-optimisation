@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-@startuml
-title 4G Default Bearer Setup
-
-participant UE
-participant eNB
-participant MME
-participant SGW
-participant PGW
-
-UE -> eNB: Attach Request (trigger)
-eNB -> MME: Initial UE Message
-
-MME -> SGW: Create Session Request
-SGW -> PGW: Create Session Request
-PGW -> SGW: Create Session Response
-SGW -> MME: Create Session Response
-
-MME -> eNB: Initial Context Setup Request
-eNB -> UE: RRC Reconfiguration (Bearer Setup)
-
-@enduml
-=======
 @startuml
 title 4G Default Bearer Setup
 

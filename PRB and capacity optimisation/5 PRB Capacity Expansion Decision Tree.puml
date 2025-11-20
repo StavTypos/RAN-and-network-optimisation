@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-@startuml
-start
-:Persistent PRB load > 80%;
-
-if (CA Available but Disabled?) then (Yes)
-  :Enable Carrier Aggregation;
-else (No)
-endif
-
-if (Free Spectrum Available?) then (Yes)
-  :Add LTE/NR Carrier;
-else (No)
-endif
-
-if (MIMO Upgrade Possible?) then (Yes)
-  :Upgrade 2x2→4x4 or 4x4→8x8;
-else (No)
-endif
-
-if (Small Cells / Sector Split?) then (Yes)
-  :Deploy Pico/Micro /\nSplit sectors;
-else (No)
-endif
-
-stop
-@enduml
-=======
 @startuml
 start
 :Persistent PRB load > 80%;

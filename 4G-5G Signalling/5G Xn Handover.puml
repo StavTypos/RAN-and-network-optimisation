@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-@startuml
-title 5G Xn Handover
-
-participant UE
-participant Source_gNB
-participant Target_gNB
-participant AMF
-
-UE -> Source_gNB: Measurement Report
-Source_gNB -> Target_gNB: Xn HO Request
-Target_gNB -> Source_gNB: Xn HO Ack
-
-Source_gNB -> UE: RRC Reconfiguration (HO Command)
-
-UE -> Target_gNB: RRC HO Complete
-
-Target_gNB -> AMF: Path Update Request
-AMF -> Target_gNB: Path Update Response
-
-@enduml
-=======
 @startuml
 title 5G Xn Handover
 

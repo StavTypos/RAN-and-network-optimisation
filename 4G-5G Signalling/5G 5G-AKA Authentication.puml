@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-@startuml
-title 5G 5G-AKA Authentication
-
-participant UE
-participant gNB
-participant AMF
-participant AUSF
-participant UDM
-
-UE -> gNB: Registration Request (SUCI)
-gNB -> AMF: Initial UE Message
-
-AMF -> AUSF: Auth Request
-AUSF -> UDM: Auth Data Request
-UDM -> AUSF: Auth Data Response
-AUSF -> AMF: Auth Response
-
-AMF -> UE: Security Mode Command
-UE -> AMF: Security Mode Complete
-
-@enduml
-=======
 @startuml
 title 5G 5G-AKA Authentication
 

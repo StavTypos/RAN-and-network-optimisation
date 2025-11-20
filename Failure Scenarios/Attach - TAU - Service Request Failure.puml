@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-@startuml
-participant UE
-participant eNB as "eNodeB"
-participant MME
-participant "HSS/DB" as HSS
-
-UE -> eNB: RRC Connection Request
-eNB -> MME: S1AP Initial UE Message (Attach/TAU)
-MME -> HSS: Update Location / Authentication Info
-HSS --> MME: Auth vectors / subscriber data
-MME -> UE: Authentication Request (via eNB)
-UE --> MME: Authentication Response
-alt Success
-  MME -> SGW: Create Session Request
-  SGW -> PGW: Create Default Bearer
-  MME -> UE: Attach Accept (via eNB)
-else Failure (e.g. MME overload / S1AP error)
-  MME --> eNB: S1AP Failure / Context Setup Failure
-  eNB -> UE: RRC Release / Attach Reject
-  note right: Common root causes: MME overload,\nS1AP errors, TA misconfig, timers
-end
-@enduml
-=======
 @startuml
 participant UE
 participant eNB as "eNodeB"

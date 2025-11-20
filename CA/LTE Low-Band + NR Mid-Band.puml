@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-@startuml
-title LTE Low-Band + NR Mid-Band (Coverage Mismatch)
-
-actor UE
-participant LTE as "eNB (700 MHz)"
-participant NR as "gNB (3.5 GHz)"
-
-UE -> LTE: RRC Connection Setup
-LTE -> NR: EN-DC Addition Request
-NR -> LTE: EN-DC Addition Request Ack
-LTE -> UE: RRC Reconfiguration (Add NR)
-alt NR RSRP above threshold
-    UE -> NR: RRC Connection Setup
-    UE -> LTE: RRC Reconfiguration Complete
-    LTE -> NR: Data Split Activated
-else NR below threshold
-    LTE -> UE: RRC Reconfiguration Cancel (Keep LTE only)
-end
-@enduml
-=======
 @startuml
 title LTE Low-Band + NR Mid-Band (Coverage Mismatch)
 

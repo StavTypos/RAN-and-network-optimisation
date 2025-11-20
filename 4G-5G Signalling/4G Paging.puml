@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-@startuml
-title 4G Paging
-
-participant MME
-participant eNB
-participant UE
-
-MME -> eNB: Paging Request
-eNB -> UE: Paging (RRC)
-
-@enduml
-=======
 @startuml
 title 4G Paging
 
